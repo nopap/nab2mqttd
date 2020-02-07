@@ -34,7 +34,10 @@ Tips:
 - Use TAGEXPIRATION to set automatically an expiration on 1 minute for the command. Will automatically be computed based on internal Nabaztag time.
 - To ensure *sleep* and *wakeup* commands are effective, you need to stop the *nabclockd* and *nabmastodond* service, otherwise commands will be overridden.
 
-### TODO
-Manage chroregraphies:
+### Chroregraphies:
 {"type":"command", "sequence":[{"audio":["nabsurprised/2.mp3"]}] }
 {"type":"command", "sequence":[{"choreography":"data:application/x-nabaztag-mtl-choreography;base64,xxx"}] }
+
+Build the bas base64 sequence using different libraries:
+- Javascript: use and customize *command.ts* from this project: https://github.com/datagutt/pynab.js
+- C#: https://github.com/nopap/choreography
