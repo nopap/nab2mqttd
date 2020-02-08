@@ -2,6 +2,10 @@
 # Nab2MQTTd 
 Client module connecting to MQTT and trigerring Nabaztag actions based on MQTT messages.
 
+Docs:
+- How to implement a Nabaztag service: https://github.com/nabaztag2018/pynab/wiki/How-to-create-a-new-service
+- Forum: https://www.tagtagtag.fr/forum/
+
 ### deployment
 PAHO MQTT is required, run as root:
 ```
