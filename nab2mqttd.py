@@ -32,14 +32,14 @@ class Nab2MQTTd(NabInfoService):
 
           # playing animation via the self.perform method; allows to have the animation properly handled by the NabService
           if '"type":"info"' in packet:
-            logging.debug("info is in da place")
+            #logging.debug("info is in da place")
             state = json.loads(packet)
             dump = json.dumps(state["animation"])
             #logging.debug("dump: " + dump)
             self.infopacket = dump
             now = datetime.datetime.now(datetime.timezone.utc)
             expiration = now + datetime.timedelta(minutes=1)
-            async_to_sync(self.perform)(expiration, "today", self.get_config())
+            async_to_sync(self.perform)(expiration, "info", self.get_config())
             return
 
           # replace TAGEXPIRATION string by properly formatted expiration datetime
