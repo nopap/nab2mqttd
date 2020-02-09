@@ -34,9 +34,12 @@ Examples:
 - {"type":"command", "sequence":[{"audio":["nabsurprised/2.mp3"]}] }
 - {"type":"command", "sequence":[{"choreography":"data:application/x-nabaztag-mtl-choreography;base64,ABQAAAARAAo="}] }
 
+- {"type":"info", "info_id":"nab2mqtt", "animation": {"tempo":15,"colors":[{"left":"ff0000","center":"00ff00","right":"0000ff"},{"left":"00ff00","center":"0000ff","right":"ff0000"},{"left":"0000ff","center":"ff0000","right":"00ff00"}]}}
+
 Tips:
 - Use TAGEXPIRATION to set automatically an expiration on 1 minute for the command. Will automatically be computed based on internal Nabaztag time.
 - To ensure *sleep* and *wakeup* commands are effective, you need to stop the *nabclockd* and *nabmastodond* service, otherwise commands will be overridden.
+- type:info sends a new animation that the service will play regularly. send another or an empty one to change it or cancel it.
 
 ### Chroregraphies:
 {"type":"command", "sequence":[{"audio":["nabsurprised/2.mp3"]}] }
