@@ -27,8 +27,20 @@ class Nab2MQTTd(NabInfoService):
     def on_message(self, client, userdata, msg):
           logging.debug(msg.payload)
           packet = str(msg.payload.decode("utf-8","ignore"))
-          #state = json.loads(m_decode)
+          #state = json.loads(packet)
           #logging.debug(state)
+
+          # playing animation via the self.perform method; allows to have the animation properly handled by the NabService
+          if '"type":"info"' in packet:
+            logging.debug("info is in da place")
+            state = json.loads(packet)
+            dump = json.dumps(state["animation"])
+            #logging.debug("dump: " + dump)
+            self.infopacket = dump
+            now = datetime.datetime.now(datetime.timezone.utc)
+            expiration = now + datetime.timedelta(minutes=1)
+            async_to_sync(self.perform)(expiration, "today", self.get_config())
+            return
 
           # replace TAGEXPIRATION string by properly formatted expiration datetime
           if "TAGEXPIRATION" in packet:
@@ -54,6 +66,8 @@ class Nab2MQTTd(NabInfoService):
         #logging.debug("Config.tls: " + str(config.tls))
         #logging.debug("Config.tlsinsecure: " + str(config.tlsinsecure))
         logging.debug("Config.topic: " + str(config.topic))
+
+        self.infopacket = None
 
         self.client = mqtt.Client(client_id = config.clientid)
         self.client.on_connect = self.on_connect
@@ -96,6 +110,9 @@ class Nab2MQTTd(NabInfoService):
 
     async def fetch_info_data(self, config_t):
         #logging.debug("fetch_info_data")
+        if self.infopacket:
+            logging.debug("fetch_info_data returning animation")
+            return self.infopacket
         return None
 
  #   def next_info_update(self, config):
@@ -108,10 +125,13 @@ class Nab2MQTTd(NabInfoService):
 
     def get_animation(self, info_data):
         #logging.debug("get_animation")
+        if info_data:
+            logging.debug("get_animation: playing animation")
+            return info_data
         return None
 
     async def perform_additional(self, expiration, type, info_data, config_t):
-        #logging.debug("perform_additional")
+        logging.debug("perform_additional")
         #if (info_data is None):
         return
 
