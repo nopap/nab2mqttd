@@ -10,7 +10,7 @@ RestartSec=1
 User=root
 WorkingDirectory=/home/pi/pynab
 ExecStart=/home/pi/pynab/venv/bin/python -m nab2mqttd.nab2mqttd
-PIDFile=/var/run/nab2mqttd.pid
+PIDFile=/run/nab2mqttd.pid
 
 [Install]
 WantedBy=multi-user.target
