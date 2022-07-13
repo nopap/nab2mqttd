@@ -21,6 +21,13 @@ For now if you plan to use TLS the public key must be copied to the server in:
 /home/pi/pynab/nab2mqttd/ca.crt
 ```
 
+### installation
+```
+sudo cp nab2mqttd.service /lib/systemd/system/
+sudo systemctl enable nab2mqttd
+sudo service nab2mqttd start
+```
+
 ### Usage
 Send to MQTT server on the specified topic the JSON commands as described in Pynab PROTOCOL documentation
 https://github.com/nabaztag2018/pynab/blob/master/PROTOCOL.md
