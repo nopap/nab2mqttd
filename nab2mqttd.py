@@ -39,7 +39,7 @@ class Nab2MQTTd(NabInfoService):
             self.infopacket = dump
             now = datetime.datetime.now(datetime.timezone.utc)
             expiration = now + datetime.timedelta(minutes=1)
-            async_to_sync(self.perform)(expiration, "info", self.get_config())
+            async_to_sync(self.perform)(expiration, "info", await self.get_config())
             return
 
           # replace TAGEXPIRATION string by properly formatted expiration datetime
