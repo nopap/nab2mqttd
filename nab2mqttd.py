@@ -81,10 +81,10 @@ class Nab2MQTTd(NabInfoService):
         self.client.connect(config.server, int(config.port), 60)
         self.client.loop_start()
 
-    def get_config(self):
+    async def get_config(self):
         from . import models
         
-        config = models.Config.load()
+        config = await models.Config.load_async()
         return (
             config.next_performance_date,
             config.next_performance_type,
@@ -100,13 +100,13 @@ class Nab2MQTTd(NabInfoService):
             ),
         )
 
-    def update_next(self, next_date, next_args):
+    async def update_next(self, next_date, next_args):
         #logging.debug("update_next")
         from . import models
-        config = models.Config.load()
+        config = await models.Config.load_async()
         config.next_performance_date = next_date
         config.next_performance_type = next_args
-        config.save()
+        await config.save_async()
 
     async def fetch_info_data(self, config_t):
         #logging.debug("fetch_info_data")
