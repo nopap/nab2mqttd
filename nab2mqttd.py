@@ -18,6 +18,9 @@ class Nab2MQTTd(NabInfoService):
         config = models.Config.load()
         client.subscribe(config.topic)
 
+    async def _perform(self, expiration, args):
+        await NabInfoService.perform(self, expiration, args, await self.get_config())
+
     # on_message callback
     # samples:
     # {"type":"sleep"}
@@ -39,7 +42,8 @@ class Nab2MQTTd(NabInfoService):
             self.infopacket = dump
             now = datetime.datetime.now(datetime.timezone.utc)
             expiration = now + datetime.timedelta(minutes=1)
-            async_to_sync(self.perform)(expiration, "info", await self.get_config())
+            #async_to_sync(self.perform)(expiration, "info", self.get_config())
+            async_to_sync(self._perform)(expiration, "info")
             return
 
           # replace TAGEXPIRATION string by properly formatted expiration datetime
