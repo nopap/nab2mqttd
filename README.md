@@ -18,12 +18,19 @@ Add nab2mqttd in the INSTALLED_APPS section of nabweb/settings.py
 ### MQTT with TLS and self signed cert
 For now if you plan to use TLS the public key must be copied to the server in:
 ```
-/home/pi/pynab/nab2mqttd/ca.crt
+/opt/pynab/nab2mqttd/ca.crt
 ```
 
 ### installation
 ```
+cd /opt/pynab
+source /opt/pynab/venv/bin/activate
+pip install paho-mqtt
+git clone https://github.com/nopap/nab2mqttd.git
+python manage.py makemigrations
+python manage.py migrate
 sudo cp nab2mqttd.service /lib/systemd/system/
+sudo systemctl daemon-reload
 sudo systemctl enable nab2mqttd
 sudo service nab2mqttd start
 ```
