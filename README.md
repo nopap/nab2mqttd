@@ -27,7 +27,7 @@ cd /opt/pynab
 source /opt/pynab/venv/bin/activate
 pip install paho-mqtt
 git clone https://github.com/nopap/nab2mqttd.git
-Add nab2mqttd in the INSTALLED_APPS section of nabweb/settings.py
+sed -i '/"nabwebhook"/a\    "nab2mqttd",' nabweb/settings.py
 python manage.py makemigrations
 python manage.py migrate
 sudo cp nab2mqttd.service /lib/systemd/system/
